@@ -13,8 +13,9 @@ public class RunRayCaster : MonoBehaviour
         Ray animingRay = new Ray(animingCamera.transform.position,animingCamera.transform.forward);
         if (Physics.Raycast(animingRay, out RaycastHit hitInfo, 1000f, LayerMask))
         {
-            Quaternion effectRotaion = Quaternion.LookRotation(hitInfo.normal);
-            Instantiate(HitMarkerPrefad,hitInfo.point,effectRotaion);
+            //Quaternion effectRotaion = Quaternion.LookRotation(hitInfo.normal);
+           // Instantiate(HitMarkerPrefad,hitInfo.point,effectRotaion);
+           ShowHitEffect(hitInfo);
             DeliverDamage(hitInfo);
         }
     }
@@ -31,5 +32,19 @@ public class RunRayCaster : MonoBehaviour
         {
             Debug.Log("ko trung muc tieu!");
         }
+    }
+   private void ShowHitEffect(RaycastHit hitInfo)
+    {
+        HitSurFace hitSurFace = hitInfo.collider.GetComponent<HitSurFace>();
+        if(hitSurFace != null)
+        {
+            GameObject effectPrefad = HitPrefadManager.Instance.GetEffectPrefad(hitSurFace.SurFaceType);
+            if (effectPrefad != null)
+            {
+                Quaternion effectRotation = Quaternion.LookRotation(hitInfo.normal);
+                Instantiate(effectPrefad,hitInfo.point,effectRotation);
+            }
+        }
+
     }
 }
