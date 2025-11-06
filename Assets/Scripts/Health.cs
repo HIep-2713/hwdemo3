@@ -25,7 +25,7 @@ public class Health : MonoBehaviour
     }
     private void Die()
     {
-        ani.SetTrigger("Die");
+        //ani.SetTrigger("Die");
         onDie.Invoke();
     }
 }
